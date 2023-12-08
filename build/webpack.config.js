@@ -28,7 +28,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 /** @type {import('webpack').Configuration} */
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  entry: './src/index.tsx',
+  entry: './src/main.tsx',
   output: {
     path: path.resolve('dist'),
     filename: '[name].[contenthash].js',
@@ -50,9 +50,8 @@ module.exports = {
       {
         test: /\.(css|sass|scss)$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -71,11 +70,11 @@ module.exports = {
                 ]
               }
             }
-          }
+          },
+          'sass-loader'
         ]
       },
       !isDevelopment && {
-        // Match `.js`, `.jsx`, `.ts` or `.tsx` files
         test: /\.[jt]sx?$/,
         loader: 'esbuild-loader',
         options: {
