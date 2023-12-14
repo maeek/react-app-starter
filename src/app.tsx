@@ -1,8 +1,17 @@
-import { useGetStatusQuery } from '@/services/api/system.api';
+import 'focus-visible';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import { Home } from './views/home';
 import './app.scss';
 
 export const App = () => {
-  const { currentData, error } = useGetStatusQuery();
-
-  return <div>{JSON.stringify(error || currentData)}</div>;
+  return (
+    <HashRouter>
+      <Routes>
+        <Route
+          path='/'
+          Component={Home}
+        />
+      </Routes>
+    </HashRouter>
+  );
 };
